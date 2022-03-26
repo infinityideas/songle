@@ -1,0 +1,92 @@
+.gameSearch {
+  width: 40vw;
+  margin: auto;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.gameSearchBox {
+  height: 30px;
+  width: 20vw;
+  margin-right: 10px;
+  background-color: black;
+  border: 2px solid white;
+  color: white;
+  caret-color: white;
+}
+
+@media (max-width: 960px) {
+  .gameSearchBox {
+    height: 30px;
+    width: 200px;
+    margin-right: 10px;
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    caret-color: white;
+    display: inline-block;
+  }
+}
+
+.gameSearchBox::placeholder {
+  font-family: "Helvetica";
+  color: white;
+}
+
+.searchButton {
+  height: 35px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+}
+
+.searchButton:hover {
+  background-color: blue;
+}
+
+.musicResults {
+  color: white;
+  width: 60vw;
+  margin: auto;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.musicResults th,
+td {
+  border: 1px solid white;
+}
+
+@media (max-width: 960px) {
+  .gameSearchBox {
+    height: 30px;
+    width: 200px;
+    margin-right: 10px;
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    caret-color: white;
+    display: inline-block;
+  }
+
+  .gameSearch {
+    width: 40vw;
+    margin: auto;
+    text-align: center;
+    margin-top: 40px;
+    display: inline;
+  }
+
+  .mobileSearch {
+    text-align: center;
+  }
+
+  .musicResults {
+    color: white;
+    width: 90vw;
+    margin: auto;
+    margin-top: 30px;
+    text-align: center;
+  }
+}

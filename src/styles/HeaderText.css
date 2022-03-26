@@ -8,6 +8,15 @@
   font-weight: 800;
 }
 
+#CenterTextGame {
+  width: 100%;
+  padding-top: 5vh;
+  text-align: center;
+  color: white;
+  font-family: "Raleway";
+  font-weight: 800;
+}
+
 #CenterTextHidden {
   width: 40vw;
   margin: auto;
@@ -17,8 +26,20 @@
   font-size: 10vw;
 }
 
+#CenterTextHiddenGame {
+  width: 100%;
+  padding-top: 5vh;
+  text-align: center;
+  font-weight: 800;
+  font-size: 10vw;
+}
+
 #CenterText h1 {
   font-size: 10vw;
+}
+
+#CenterTextGame h1 {
+  font-size: 4vw;
 }
 
 #underText {

@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="App">
-      <HeaderText text="Songle" doAnimation={true} subText={subText}/>
+      <HeaderText text="Songle" doAnimation={true} subText={subText} isGame={false} />
       <div id="buttonHolder">
         <NavButton route="/daily" innerText="Daily" />
         <NavButton route="/practice" innerText="Practice" />
@@ -21,7 +21,7 @@ function App() {
       </div>
       <div id="key">
         <p><strong>📅 Daily:</strong> A new song daily; changes midnight EST.<br />
-        <strong>✍️ Practice:</strong> Practice your song-recognition prowess. Choose the genre if you'd like.<br />
+        <strong>✍️ Practice:</strong> Practice your song-recognition powers. Choose the genre if you'd like.<br />
         <strong>🔥 Challenge:</strong> Choose a song and challenge your friends to recognize the song.<br />
         <strong>⁉️ About:</strong> Learn more about Songle.</p>  
       </div>

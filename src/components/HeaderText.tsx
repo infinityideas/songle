@@ -12,7 +12,8 @@ gsap.registerPlugin(TextPlugin);
 interface HeaderTextProps {
   text: string,
   doAnimation: boolean,
-  subText: JSX.Element
+  subText: JSX.Element,
+  isGame: boolean
 }
 
 function HeaderText(props: HeaderTextProps) {
@@ -37,17 +38,27 @@ function HeaderText(props: HeaderTextProps) {
     gsap.to(headerText.current, {duration: animationDuration, text: props.text, ease: "none"})
   }, [loaded])
 
-  let toReturn;
-
   if (loaded) {
-    return (
-        <div id="CenterText" style={{display: toReturn}}>
+    if (props.isGame) {
+      return (
+        <div id="CenterTextGame">
+          <h1 style={{marginTop: 0, marginBottom: 0}}>{props.text}</h1>
+          {props.subText}
+        </div>);
+    } else {
+      return (
+        <div id="CenterText">
           <h1 ref={headerText} style={{marginTop: 0, marginBottom: 0}}>{(props.text.split(''))[0]}</h1>
           {props.subText}
         </div>
-    );
+      );
+    }
   } else {
-    return <div id="CenterTextHidden">Lorem</div>;
+    if (props.isGame) {
+      return <div id="CenterTextHiddenGame">Lorem</div>;
+    } else {
+      return <div id="CenterTextHidden">Lorem</div>;
+    }
   }
 }
 
