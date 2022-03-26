@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/App.css';
+import '../styles/HeaderText.css';
 
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
@@ -28,11 +28,10 @@ function HeaderText() {
 
   if (loaded) {
     return (
-      <div className="App">
         <div id="CenterText" style={{display: toReturn}}>
-          <h1 ref={headerText} style={{marginTop: 0}}></h1>
+          <h1 ref={headerText} style={{marginTop: 0, marginBottom: 0}}></h1>
+          <p id="underText">Inspired by <a href="https://heardle.app">Heardle</a>. Now with daily and practice modes (including genre selection).</p>
         </div>
-      </div>
     );
   } else {
     return <div></div>;

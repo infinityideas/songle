@@ -3,17 +3,3 @@
   height: 100vh;
   background-color: black;
 }
-
-#CenterText {
-  width: 40vw;
-  margin: auto;
-  padding-top: 20vh;
-  text-align: center;
-  color: white;
-  font-family: "Raleway";
-  font-weight: 800;
-}
-
-#CenterText h1 {
-  font-size: 10vw;
-}
