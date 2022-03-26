@@ -54,7 +54,7 @@ a {
   #CenterText {
     width: 60vw;
     margin: auto;
-    padding-top: 10vh;
+    padding-top: 3vh;
     text-align: center;
     color: white;
     font-family: "Raleway";
@@ -63,5 +63,9 @@ a {
 
   #CenterText h1 {
     font-size: 15vw;
+  }
+
+  #CenterTextGame h1 {
+    font-size: 9vw;
   }
 }

@@ -46,10 +46,15 @@
 }
 
 #centered {
-  width: 50vh;
+  width: 50vw;
   margin: auto;
   color: white;
   text-align: center;
+}
+
+.eventHolder {
+  border: 1px solid white;
+  padding: 5px;
 }
 
 @media (max-width: 960px) {

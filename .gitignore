@@ -25,3 +25,5 @@ yarn-error.log*
 flask/venv/*
 flask/config.ini
 flask/__pycache__/*
+
+src/scripts/Config.tsx

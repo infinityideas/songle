@@ -9,9 +9,6 @@ function Footer() {
             <div id="songlefooter">
                 {insideText}
             </div>
-            <div id="phone">
-            {insideText}
-            </div>
         </div>
     )
 }
