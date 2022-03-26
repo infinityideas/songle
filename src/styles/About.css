@@ -1,0 +1,9 @@
+#aboutHolder {
+  width: 40vw;
+  margin: auto;
+}
+
+#aboutText {
+  font-family: "Helvetica";
+  color: white;
+}

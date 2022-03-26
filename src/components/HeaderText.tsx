@@ -9,8 +9,15 @@ var headerText: any = React.createRef();
 
 gsap.registerPlugin(TextPlugin);
 
-function HeaderText() {
+interface HeaderTextProps {
+  text: string,
+  doAnimation: boolean,
+  subText: JSX.Element
+}
+
+function HeaderText(props: HeaderTextProps) {
   const [loaded, setLoaded] = useState(false);
+  let animationDuration: number;
 
   useEffect(() => {
    var font = new FontFaceObserver('Raleway');
@@ -21,7 +28,13 @@ function HeaderText() {
   }, []);
 
   useEffect(() => {
-    gsap.to(headerText.current, {duration: 1.1, text: "Songle", ease: "none"})
+    if (props.doAnimation) {
+      animationDuration = 1.1;
+    } else {
+      animationDuration = 0;
+    }
+
+    gsap.to(headerText.current, {duration: animationDuration, text: props.text, ease: "none"})
   }, [loaded])
 
   let toReturn;
@@ -29,8 +42,8 @@ function HeaderText() {
   if (loaded) {
     return (
         <div id="CenterText" style={{display: toReturn}}>
-          <h1 ref={headerText} style={{marginTop: 0, marginBottom: 0}}>S</h1>
-          <p id="underText">Inspired by <a href="https://heardle.app">Heardle</a>. Now with daily and practice modes (including genre selection).</p>
+          <h1 ref={headerText} style={{marginTop: 0, marginBottom: 0}}>{(props.text.split(''))[0]}</h1>
+          {props.subText}
         </div>
     );
   } else {
