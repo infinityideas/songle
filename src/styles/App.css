@@ -10,3 +10,12 @@
   margin-top: 10px;
   text-align: center;
 }
+
+#key {
+  width: 40vw;
+  margin: auto;
+  text-align: center;
+  padding-top: 30px;
+  color: white;
+  line-height: 1.4;
+}

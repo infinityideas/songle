@@ -6,6 +6,10 @@ import App from './App';
 import About from './About';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Practice from './Practice';
+import Daily from './Daily';
+import Challenge from './Challenge';
+import NotFound from './NotFound';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,6 +17,10 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
+        <Route path="/practice" element={<Practice />} />
+        <Route path="/daily" element={<Daily />} />
+        <Route path="/challenge" element={<Challenge />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
