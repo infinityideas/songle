@@ -49,3 +49,19 @@
 a {
   color: white;
 }
+
+@media (max-width: 900px) {
+  #CenterText {
+    width: 60vw;
+    margin: auto;
+    padding-top: 20vh;
+    text-align: center;
+    color: white;
+    font-family: "Raleway";
+    font-weight: 800;
+  }
+
+  #CenterText h1 {
+    font-size: 15vw;
+  }
+}
