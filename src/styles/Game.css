@@ -45,19 +45,6 @@
   background-color: blue;
 }
 
-.musicResults {
-  color: white;
-  width: 60vw;
-  margin: auto;
-  margin-top: 30px;
-  text-align: center;
-}
-
-.musicResults th,
-td {
-  border: 1px solid white;
-}
-
 @media (max-width: 960px) {
   .gameSearchBox {
     height: 30px;
@@ -79,14 +66,6 @@ td {
   }
 
   .mobileSearch {
-    text-align: center;
-  }
-
-  .musicResults {
-    color: white;
-    width: 90vw;
-    margin: auto;
-    margin-top: 30px;
     text-align: center;
   }
 }

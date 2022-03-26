@@ -1,0 +1,12 @@
+.chooseButton {
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  border: 2px solid white;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.chooseButton:hover {
+  background-color: blue;
+}
