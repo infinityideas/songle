@@ -3,3 +3,10 @@
   height: 100vh;
   background-color: black;
 }
+
+#buttonHolder {
+  width: 40vw;
+  margin: auto;
+  margin-top: 10px;
+  text-align: center;
+}

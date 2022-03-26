@@ -1,0 +1,18 @@
+.NavButton {
+  border-radius: 10px;
+  width: 100px;
+  height: 23px;
+  background-color: black;
+  border: 2px solid white;
+  margin-right: 10px;
+}
+
+.NavButton:hover {
+  background-color: blue;
+}
+
+.innerText {
+  margin: 0;
+  color: white;
+  font-size: 1.2em;
+}

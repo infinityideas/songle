@@ -21,7 +21,7 @@ function HeaderText() {
   }, []);
 
   useEffect(() => {
-    gsap.to(headerText.current, {duration: 1, text: "Songle", ease: "none"})
+    gsap.to(headerText.current, {duration: 1.1, text: "Songle", ease: "none"})
   }, [loaded])
 
   let toReturn;
@@ -29,12 +29,12 @@ function HeaderText() {
   if (loaded) {
     return (
         <div id="CenterText" style={{display: toReturn}}>
-          <h1 ref={headerText} style={{marginTop: 0, marginBottom: 0}}></h1>
+          <h1 ref={headerText} style={{marginTop: 0, marginBottom: 0}}>S</h1>
           <p id="underText">Inspired by <a href="https://heardle.app">Heardle</a>. Now with daily and practice modes (including genre selection).</p>
         </div>
     );
   } else {
-    return <div></div>;
+    return <div id="CenterTextHidden">Lorem</div>;
   }
 }
 
