@@ -3,7 +3,8 @@ import ChooseButton from './ChooseButton';
 import MusicResultsPresentational from './presentational/MusicResultsPresentational';
 
 interface ResultsProps {
-    response: Array<any>
+    response: Array<any>,
+    onChoose: any,
 }
 
 class MusicResults extends React.Component<ResultsProps, {}> {
@@ -21,7 +22,7 @@ class MusicResults extends React.Component<ResultsProps, {}> {
                 tds.push(React.createElement("td", {}, [React.createElement("img", {src: this.props.response[i].album.cover_small})]));
                 tds.push(React.createElement("td", {}, [this.props.response[i].title]));
                 tds.push(React.createElement("td", {}, [this.props.response[i].artist.name]));
-                tds.push(React.createElement("td", {}, [<ChooseButton />]))
+                tds.push(React.createElement("td", {}, [<ChooseButton id={this.props.response[i].id} onChoose={this.props.onChoose} />]))
                 tableChildren.push(React.createElement("tr", {}, tds));
             }
         }

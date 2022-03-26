@@ -11,7 +11,9 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 interface ChallengeState {
     searchResults: Array<object>,
-    searched: string
+    searched: string,
+    chosen: boolean,
+    chosenTrack: string,
 }
 
 class Challenge extends React.Component<{}, ChallengeState> {
@@ -23,10 +25,13 @@ class Challenge extends React.Component<{}, ChallengeState> {
         this.searchRef = React.createRef();
         this.state = ({
             searchResults: [],
-            searched: "none"
+            searched: "none",
+            chosen: false,
+            chosenTrack: ""
         })
 
         this.getDeezerSearch = this.getDeezerSearch.bind(this);
+        this.onChoose = this.onChoose.bind(this);
     }
 
     async getDeezerSearch() {
@@ -35,10 +40,25 @@ class Challenge extends React.Component<{}, ChallengeState> {
             limit: 5,
             order: "RANKING",
         }}).then((response: any) => {
+            console.log(response);
             this.setState({
                 searchResults: response.data.data,
-                searched: "block"
+                searched: "block",
+                chosen: false,
+                chosenTrack: ""
             })
+        })
+    }
+
+    onChoose(id: number) {
+        console.log(id);
+        this.setState(prev => {
+            return {
+            searchResults: prev.searchResults,
+            searched: "none",
+            chosen: true,
+            chosenTrack: id.toString(),
+            }
         })
     }
 
@@ -47,23 +67,34 @@ class Challenge extends React.Component<{}, ChallengeState> {
             <p style={{fontFamily: "Helvetica", marginTop: 0}}>Challenge your friends to guess a song of your choice.</p>
         );
 
-        return (
-            <div>
-                <div className="gameHeader">
-                    <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} />
-                </div>
-                <div className="mobileSearch">
-                    <div className="gameSearch">
-                        <input ref={this.searchRef} className="gameSearchBox" type="text" placeholder="Enter the name of a song"></input>
-                        <button className="searchButton" onClick={this.getDeezerSearch}>Search</button>
+        if (!this.state.chosen) {
+            return (
+                <div>
+                    <div className="gameHeader">
+                        <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} />
                     </div>
-                    <div style={{display: this.state.searched}}>
-                        <MusicResults response={this.state.searchResults}/>
+                    <div className="mobileSearch">
+                        <div className="gameSearch">
+                            <input ref={this.searchRef} className="gameSearchBox" type="text" placeholder="Enter the name of a song"></input>
+                            <button className="searchButton" onClick={this.getDeezerSearch}>Search</button>
+                        </div>
+                        <div style={{display: this.state.searched}}>
+                            <MusicResults response={this.state.searchResults} onChoose={this.onChoose} />
+                        </div>
                     </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
-        )
+            )
+        } else {
+            return (
+                <div>
+                    <div className="gameHeader">
+                        <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} />    
+                    </div>
+                    <Footer />
+                </div>
+            )
+        }
     }
 }
 
