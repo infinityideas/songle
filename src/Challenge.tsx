@@ -91,6 +91,9 @@ class Challenge extends React.Component<{}, ChallengeState> {
                     <div className="gameHeader">
                         <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} />    
                     </div>
+                    <div id="centered">
+                        <h1>Awesome. Share the link below with anyone you want.</h1>    
+                    </div>
                     <Footer />
                 </div>
             )

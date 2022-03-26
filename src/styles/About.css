@@ -7,3 +7,10 @@
   font-family: "Helvetica";
   color: white;
 }
+
+@media (max-width: 900px) {
+  #aboutHolder {
+    width: 90vw;
+    margin: auto;
+  }
+}
