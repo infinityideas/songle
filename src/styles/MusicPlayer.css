@@ -1,0 +1,49 @@
+.MusicPlayer {
+  width: 40vw;
+  height: 60px;
+  background-color: black;
+  margin: auto;
+  border: 1px solid white;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  border-right: 1px solid white;
+  padding: 0;
+}
+
+.playPause {
+  text-align: center;
+  filter: invert(100%);
+  cursor: pointer;
+}
+
+.progressBar {
+  width: 40vw;
+  height: 19px;
+  display: block;
+}
+
+.svgHolder {
+  width: 40vw;
+  margin: auto;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  border-top: 1px solid white;
+}
+
+.playButton {
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .MusicPlayer {
+    width: 70vw;
+    height: 60px;
+    background-color: black;
+    margin: auto;
+  }
+}

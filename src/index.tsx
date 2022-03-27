@@ -4,6 +4,7 @@ import './styles/index.css';
 
 import App from './App';
 import About from './About';
+import ChallengeGame from './ChallengeGame';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Practice from './Practice';
@@ -21,6 +22,7 @@ ReactDOM.render(
         <Route path="/daily" element={<Daily />} />
         <Route path="/challenge" element={<Challenge />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/challengegame/:gameId" element={<ChallengeGame />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

@@ -8,6 +8,7 @@ import FontFaceObserver from "fontfaceobserver";
 var headerText: any = React.createRef();
 
 gsap.registerPlugin(TextPlugin);
+gsap.config({ nullTargetWarn: false });
 
 interface HeaderTextProps {
   text: string,
