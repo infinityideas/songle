@@ -1,6 +1,6 @@
 # Songle
 
-This project was made by Darius (infinityideas) and was inspired by [https://heardle.app](Heardle). 
+This project was made by Darius (infinityideas) and was inspired by [Heardle](https://heardle.app). 
 
 ## How to make a copy
 This project is licensed under GNU's Lesser General Public License. This means that you are free to copy, modify, and distribute the code (with some limitations; check out the license file for more).
