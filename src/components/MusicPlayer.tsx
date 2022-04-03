@@ -25,6 +25,7 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
     private howler: any;
     private playPauseRef: any;
     private animation: any;
+    private headerRefs: Array<any>;
 
     constructor(props: MusicPlayerProps) {
         super(props);
@@ -35,6 +36,7 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
         this.lineSegments = ["0", "3.33%", "13.33%", "23.33%", "43.33%", "46.66%", "100%"];
         this.lineSegmentTimes = ["0", "1", "4", "7", "13", "20", "30"];
         this.animation = "";
+        this.headerRefs = [];
 
         this.howler = new Howl({
             src: [this.props.previewLink],
@@ -48,6 +50,7 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
             },
             onend: () => {
                 this.playPauseRef.current.src = Play;
+                gsap.to(this.lineRef.current, {drawSVG: "0 live", duration: "0"});
             }
         });
 
@@ -56,26 +59,29 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
 
     playSound() {
 
-        if (this.howler.playing()) {
-            this.howler.stop();
-            this.animation.kill();
-            this.playPauseRef.current.src=Play;
-            return;
-        } else {
-            this.playPauseRef.current.src=Pause;
-        }
+        this.forceUpdate();
         
 
-        gsap.to(this.lineRef.current, {drawSVG: "0", duration: "0"});
+        gsap.to(this.lineRef.current, {drawSVG: "0 live", duration: "0"});
         this.lineRef.current.style.stroke = "green";
 
-        this.animation = gsap.fromTo(this.lineRef.current, {drawSVG: "0"}, {drawSVG: this.lineSegments[parseInt(this.props.currentStage)], duration: this.lineSegmentTimes[parseInt(this.props.currentStage)]});
+        this.animation = gsap.fromTo(this.lineRef.current, {drawSVG: "0 live"}, {drawSVG: this.lineSegments[parseInt(this.props.currentStage)], duration: this.lineSegmentTimes[parseInt(this.props.currentStage)]});
 
         this.howler.play(this.props.currentStage);
 
     }
 
     render() {
+        this.headerRefs = [];
+
+        for (var i=0; i<6; i++) {
+            if (i<parseInt(this.props.currentStage)) {
+                this.headerRefs.push("🔊");
+            } else {
+                this.headerRefs.push("🔇");
+            }
+        }
+
         return (
             <div>
                 <div className="svgHolder">
@@ -95,12 +101,12 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
                         </colgroup>
                         <thead>
                             <tr style={{height: "20px"}}>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[0]}}></th>
+                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[1]}}></th>
+                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[2]}}></th>
+                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[3]}}></th>
+                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[4]}}></th>
+                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[5]}}></th>
                             </tr>
                         </thead>
                     </table>

@@ -37,6 +37,8 @@ th {
 
 .playButton {
   border: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
 @media (max-width: 900px) {
@@ -45,5 +47,25 @@ th {
     height: 60px;
     background-color: black;
     margin: auto;
+  }
+
+  .progressBar {
+    width: 70vw;
+    height: 19px;
+    display: block;
+  }
+
+  .svgHolder {
+    width: 70vw;
+    margin: auto;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-top: 1px solid white;
+  }
+
+  .playButton {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
   }
 }

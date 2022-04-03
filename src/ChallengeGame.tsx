@@ -6,6 +6,7 @@ import { Outlet, useParams } from "react-router-dom";
 import './styles/Game.css';
 import MusicPlayer from './components/MusicPlayer';
 import Footer from './components/Footer';
+import Guessing from './components/Guessing';
 const axios = require("axios");
 
 
@@ -14,18 +15,48 @@ function ChallengeGame () {
     const { gameId } = useParams();
 
     const [previewLink, setPreviewLink] = useState("");
-    const [currentStage, setCurrentStage] = useState("6");
+    const [currentStage, setCurrentStage] = useState("1");
+    const [prevGueses, setPrevGuesses] = useState([{value: "songle", correct: false, correctString: "❌"}]);
+    const [songName, setSongName] = useState("");
+    const [artistName, setArtistName] = useState("");
 
+    const getDeezerResult = async (id: string) => {
+        await axios.get('http://127.0.0.1:8080/https://api.deezer.com/track/'+id, { headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response: any) => {
+            if ((response.data.title_short == songName) && (response.data.artist.name == artistName)) {
+                if (prevGueses[0].value=="songle") {
+                    setPrevGuesses([{value: response.data.title_short, correct: true, correctString: "✅"}]);
+                } else {
+                    setPrevGuesses([...prevGueses, {value: response.data.title_short, correct: true, correctString: "✅"}]);
+                }
+                setCurrentStage("6");
+            } else {
+                if (prevGueses[0].value=="songle") {
+                    setPrevGuesses([{value: response.data.title_short, correct: false, correctString: "❌"}]);
+                } else {
+                    setPrevGuesses([...prevGueses, {value: response.data.title_short, correct: false, correctString: "❌"}]);
+                }
+                setCurrentStage((parseInt(currentStage)+1).toString());
+            }
+        })
+    };
+
+    const onChoose = (id: string) => {
+        getDeezerResult(id);
+        setArtistName(artistName);
+    };
+ 
     useEffect(() => {
         const getTrackInfo = async (gameId: string) => {
         
-            await axios.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/"+gameId, {headers: 
+            await axios.get("http://127.0.0.1:8080/https://api.deezer.com/track/"+gameId, {headers: 
                 {"X-Requested-With": "XMLHttpRequest"}
             }).then((response: any) => {
                 if (response.status==800) {
                     window.location.replace("https://localhost:3000/404");
                 } else {
                     setPreviewLink(response.data.preview);
+                    setSongName(response.data.title_short);
+                    setArtistName(response.data.artist.name);
                 }
             });
         
@@ -46,7 +77,7 @@ function ChallengeGame () {
     var toReturn = <div></div>;
 
     if (previewLink!="") {
-        toReturn = <MusicPlayer currentStage={currentStage} previewLink={previewLink} />
+        toReturn = (<div><MusicPlayer currentStage={currentStage} previewLink={previewLink} /><Guessing songArtist={artistName} songName={songName} currentStage={currentStage} prevGuesses={prevGueses} onChoose={onChoose} /></div>)
     }
     
     const subText = (

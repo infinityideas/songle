@@ -8,6 +8,7 @@ import './styles/Game.css';
 
 import EventDict from './scripts/EventDict';
 import config from './scripts/Config';
+import MusicSearch from './components/MusicSearch';
 
 const axios = require('axios');
 
@@ -26,13 +27,11 @@ const pusher = new Pusher(config['pusherKey'], {
 })
 
 class Challenge extends React.Component<{}, ChallengeState> {
-    private searchRef: any;
     private eventDiv: JSX.Element;
 
     constructor(props: any) {
         super(props);
 
-        this.searchRef = React.createRef();
         this.state = ({
             searchResults: [],
             searched: "none",
@@ -50,23 +49,16 @@ class Challenge extends React.Component<{}, ChallengeState> {
         this.generateEventList = this.generateEventList.bind(this);
     }
 
-    async getDeezerSearch() {
-        await axios.get('https://cors-anywhere.herokuapp.com/https://api.deezer.com/search', { params: {
-            q: this.searchRef.current.value,
-            limit: 5,
-            order: "RANKING",
-        }}, { headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response: any) => {
-            console.log(response);
-            this.setState({
-                searchResults: response.data.data,
-                searched: "block",
-                chosen: false,
-                chosenTrack: "",
-                randomURL: "",
-                events: [],
-                channel: null,
-            })
-        })
+    async getDeezerSearch(response: any) {
+        this.setState({
+            searchResults: response,
+            searched: "block",
+            chosen: false,
+            chosenTrack: "",
+            randomURL: "",
+            events: [],
+            channel: null,
+        });
     }
 
     async onChoose(id: number) {
@@ -121,10 +113,7 @@ class Challenge extends React.Component<{}, ChallengeState> {
                         <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} />
                     </div>
                     <div className="mobileSearch">
-                        <div className="gameSearch">
-                            <input ref={this.searchRef} className="gameSearchBox" type="text" placeholder="Enter the name of a song"></input>
-                            <button className="searchButton" onClick={this.getDeezerSearch}>Search</button>
-                        </div>
+                        <MusicSearch onResult={this.getDeezerSearch} />
                         <div style={{display: this.state.searched}}>
                             <MusicResults response={this.state.searchResults} onChoose={this.onChoose} />
                         </div>
