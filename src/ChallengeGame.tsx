@@ -21,7 +21,7 @@ function ChallengeGame () {
     const [songName, setSongName] = useState("");
     const [artistName, setArtistName] = useState("");
 
-    const getDeezerResult = async (id: string) => {
+    const getDeezerResult = async (id: string, gameId: any) => {
         await axios.get(config.corsAnywhere+'https://api.deezer.com/track/'+id, { headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response: any) => {
             if ((response.data.title_short == songName) && (response.data.artist.name == artistName)) {
                 if (prevGueses[0].value=="songle") {
@@ -30,6 +30,10 @@ function ChallengeGame () {
                     setPrevGuesses([...prevGueses, {value: response.data.title_short, correct: true, correctString: "✅"}]);
                 }
                 setCurrentStage("6");
+                axios.get(config.flaskServer+"/ne", {params: {
+                    "type": "success",
+                    "channel": gameId.split('-')[1]
+                }});
             } else {
                 if (prevGueses[0].value=="songle") {
                     setPrevGuesses([{value: response.data.title_short, correct: false, correctString: "❌"}]);
@@ -37,12 +41,23 @@ function ChallengeGame () {
                     setPrevGuesses([...prevGueses, {value: response.data.title_short, correct: false, correctString: "❌"}]);
                 }
                 setCurrentStage((parseInt(currentStage)+1).toString());
+                axios.get(config.flaskServer+"/ne", {params: {
+                    "type": "fail-"+response.data.title_short+"-"+response.data.artist.name,
+                    "channel": gameId.split('-')[1]
+                }});
+
+                if (prevGueses.length == 5) {
+                    axios.get(config.flaskServer+"/ne", {params: {
+                        "type": "endfail",
+                        "channel": gameId.split('-')[1]
+                    }})
+                }
             }
         })
     };
 
-    const onChoose = (id: string) => {
-        getDeezerResult(id);
+    const onChoose = (id: string, gameIda = gameId) => {
+        getDeezerResult(id, gameIda);
         setArtistName(artistName);
     };
  
@@ -69,6 +84,10 @@ function ChallengeGame () {
     
         if (gameId!=undefined) {
              getTrackInfo(gameId.split('-')[0]);
+             axios.get(config.flaskServer+"/ne", {params: {
+                 "type": "opened",
+                 "channel": gameId.split('-')[1]
+             }})
         } else {
             window.location.replace(config.songleAddress+"/404");
         }
@@ -78,7 +97,7 @@ function ChallengeGame () {
     var toReturn = <div></div>;
 
     if (previewLink!="") {
-        toReturn = (<div><MusicPlayer currentStage={currentStage} previewLink={previewLink} /><Guessing songArtist={artistName} songName={songName} currentStage={currentStage} prevGuesses={prevGueses} onChoose={onChoose} /></div>)
+        toReturn = (<div><MusicPlayer currentStage={currentStage} previewLink={previewLink} /><Guessing songArtist={artistName} songName={songName} currentStage={currentStage} prevGuesses={prevGueses} onChoose={onChoose} gameId={gameId} /></div>)
     }
     
     const subText = (

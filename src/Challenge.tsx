@@ -3,6 +3,7 @@ import Footer from './components/Footer';
 import HeaderText from './components/HeaderText';
 import MusicResults from './components/MusicResults';
 import Pusher from "pusher-js";
+import NavButton from './components/NavButton';
 
 import './styles/Game.css';
 
@@ -28,6 +29,7 @@ const pusher = new Pusher(config['pusherKey'], {
 
 class Challenge extends React.Component<{}, ChallengeState> {
     private eventDiv: JSX.Element;
+    private goHome: JSX.Element;
 
     constructor(props: any) {
         super(props);
@@ -43,6 +45,7 @@ class Challenge extends React.Component<{}, ChallengeState> {
         })
 
         this.eventDiv = <div></div>;
+        this.goHome = <div></div>;
 
         this.getDeezerSearch = this.getDeezerSearch.bind(this);
         this.onChoose = this.onChoose.bind(this);
@@ -111,11 +114,19 @@ class Challenge extends React.Component<{}, ChallengeState> {
 
      for (var i=0; i<this.state.events.length; i++) {
         ename = this.state.events[i].ename;
-        eventText = EventDict[ename];
+        if (ename.substring(0,4) == "fail") {
+            eventText = EventDict["fail"]+ename.split('-')[1]+" by "+ename.split('-')[2];
+        } else {
+            eventText = EventDict[ename];
+        }
         eventlist.push(React.createElement("p", {}, [React.createElement("strong", {}, [this.state.events[i].localtime+": "]), eventText+" by "+this.state.events[i].name]))
      }
 
      this.eventDiv = React.createElement("div", {className: "eventHolder"}, eventlist);
+
+     if (this.state.events[this.state.events.length-1].ename == "endfail") {
+         this.goHome = <div style={{width: "100%", margin: "auto", marginTop: "10px"}}><NavButton route="/challenge" innerText="New game" /></div>
+     }
     }
 
     render() {
@@ -152,7 +163,8 @@ class Challenge extends React.Component<{}, ChallengeState> {
                         <h1>Awesome. Share the link below with anyone you want.</h1> 
                         <h3 style={{overflowWrap: "anywhere"}}>{this.state.randomURL}</h3><hr />
                         <h2>Want real-time updates on your link? Don't close this tab.</h2>
-                        {this.eventDiv}   
+                        {this.eventDiv}
+                        {this.goHome}   
                     </div>
                     <Footer />
                 </div>

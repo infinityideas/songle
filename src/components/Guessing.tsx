@@ -4,13 +4,17 @@ import MusicResults from './MusicResults';
 
 import '../styles/Game.css';
 import '../styles/Guessing.css';
+import config from '../scripts/Config';
+
+const axios = require('axios');
 
 interface GuessingProps {
     currentStage: string,
     prevGuesses: Array<any>,
     songName: string,
     songArtist: string,
-    onChoose: any;
+    onChoose: any,
+    gameId: any
 }
 
 interface GuessingState {

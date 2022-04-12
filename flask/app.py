@@ -41,4 +41,6 @@ def ne():
     channel = request.args.get('channel')
 
     pusher_client.trigger(channel, 'ne', {u'message': typeE})
-    return ''
+    resp = make_response({"resp": "valid"})
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
