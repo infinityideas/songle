@@ -47,6 +47,7 @@ class Challenge extends React.Component<{}, ChallengeState> {
         this.getDeezerSearch = this.getDeezerSearch.bind(this);
         this.onChoose = this.onChoose.bind(this);
         this.generateEventList = this.generateEventList.bind(this);
+        this.addEvent = this.addEvent.bind(this);
     }
 
     async getDeezerSearch(response: any) {
@@ -62,7 +63,7 @@ class Challenge extends React.Component<{}, ChallengeState> {
     }
 
     async onChoose(id: number) {
-        await axios.get("http://127.0.0.1:5000/getrandomurl", { params: {id: id}}).then((response: any) => {
+        await axios.get(config.flaskServer+"/getrandomurl", { params: {id: id}}).then((response: any) => {
             var today = new Date();    
 
             var channelName = response.data.url.split('/');
@@ -77,9 +78,29 @@ class Challenge extends React.Component<{}, ChallengeState> {
                     chosenTrack: id.toString(),
                     randomURL: response.data.url,
                     channel: pusher.subscribe(channelName),
-                    events: [{"ename": "started", "localtime": (today.getHours() % 12) + ":" + ((today.getMinutes()<10?'0':'')+today.getMinutes()) + (((today.getHours() / 12) >= 1) ? " PM" : " AM"), "name": "you"}]
+                    events: [{"ename": "started", "localtime": (today.getHours() % 12 == 0 ? '12': today.getHours() % 12) + ":" + ((today.getMinutes()<10?'0':'')+today.getMinutes()) + (((today.getHours() / 12) >= 1) ? " PM" : " AM"), "name": "you"}]
                 }
+            });
+
+            this.state.channel.bind("ne", (data: any) => {
+                this.addEvent(data);
             })
+        })
+    }
+
+    addEvent(data: any) {
+        console.log(data);
+        var today = new Date();
+        this.setState(prev => {
+            return {
+                searchResults: prev.searchResults,
+                searched: prev.searched,
+                chosen: prev.chosen,
+                chosenTrack: prev.chosenTrack,
+                randomURL: prev.randomURL,
+                channel: prev.channel,
+                events: [...prev.events, {"ename": data.message, "localtime": (today.getHours() % 12 == 0 ? '12' : today.getHours() % 12) + ":" +((today.getMinutes()<10?'0':'')+today.getMinutes()) + (((today.getHours() / 12) >= 1) ? " PM": " AM"), "name": "someone"}]
+            }
         })
     }
 

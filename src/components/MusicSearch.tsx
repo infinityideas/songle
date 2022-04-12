@@ -1,4 +1,5 @@
 import React from 'react';
+import config from '../scripts/Config';
 
 const axios = require('axios');
 
@@ -18,7 +19,7 @@ class MusicSearch extends React.Component<MusicSearchProps, {}> {
     }
 
     async getDeezerSearch() {
-        await axios.get('http://127.0.0.1:8080/https://api.deezer.com/search', { params: {
+        await axios.get(config.corsAnywhere+'https://api.deezer.com/search', { params: {
             q: this.searchRef.current.value,
             limit: 5,
             order: "RANKING",

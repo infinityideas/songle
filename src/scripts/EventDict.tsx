@@ -1,6 +1,7 @@
 
 const eventdict: any = {
-    started: "✅ Link created"
+    started: "✅ Link created",
+    opened: "opened!"
 }
 
 export default eventdict;

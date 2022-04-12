@@ -31,6 +31,14 @@ def getrandomurl():
     while checkavailable(response.json()['result']['random']['data'][0]):
         response = requests.post("https://api.random.org/json-rpc/4/invoke", postRequestData, headers={"Content-Type": "application/json"})
     
-    resp = make_response({"url": "http://localhost:3000/challengegame/"+str(songid)+"-"+response.json()['result']['random']['data'][0]})
+    resp = make_response({"url": config['MISC']['flask_address']+"/challengegame/"+str(songid)+"-"+response.json()['result']['random']['data'][0]})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
+
+@app.route('/ne', methods=['GET'])
+def ne():
+    typeE = request.args.get('type')
+    channel = request.args.get('channel')
+
+    pusher_client.trigger(channel, 'ne', {u'message': typeE})
+    return ''

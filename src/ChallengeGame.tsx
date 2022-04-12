@@ -7,6 +7,7 @@ import './styles/Game.css';
 import MusicPlayer from './components/MusicPlayer';
 import Footer from './components/Footer';
 import Guessing from './components/Guessing';
+import config from './scripts/Config';
 const axios = require("axios");
 
 
@@ -21,7 +22,7 @@ function ChallengeGame () {
     const [artistName, setArtistName] = useState("");
 
     const getDeezerResult = async (id: string) => {
-        await axios.get('http://127.0.0.1:8080/https://api.deezer.com/track/'+id, { headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response: any) => {
+        await axios.get(config.corsAnywhere+'https://api.deezer.com/track/'+id, { headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response: any) => {
             if ((response.data.title_short == songName) && (response.data.artist.name == artistName)) {
                 if (prevGueses[0].value=="songle") {
                     setPrevGuesses([{value: response.data.title_short, correct: true, correctString: "✅"}]);
@@ -48,11 +49,11 @@ function ChallengeGame () {
     useEffect(() => {
         const getTrackInfo = async (gameId: string) => {
         
-            await axios.get("http://127.0.0.1:8080/https://api.deezer.com/track/"+gameId, {headers: 
+            await axios.get(config.corsAnywhere+"https://api.deezer.com/track/"+gameId, {headers: 
                 {"X-Requested-With": "XMLHttpRequest"}
             }).then((response: any) => {
                 if (response.status==800) {
-                    window.location.replace("https://localhost:3000/404");
+                    window.location.replace(config.songleAddress+"/404");
                 } else {
                     setPreviewLink(response.data.preview);
                     setSongName(response.data.title_short);
@@ -63,13 +64,13 @@ function ChallengeGame () {
         }
 
         if (!window.location.href.includes("-")) {
-            window.location.replace("http://localhost:3000/404");
+            window.location.replace(config.songleAddress+"/404");
         }
     
         if (gameId!=undefined) {
              getTrackInfo(gameId.split('-')[0]);
         } else {
-            window.location.replace("http://localhost:3000/404");
+            window.location.replace(config.songleAddress+"/404");
         }
 
     }, []);
