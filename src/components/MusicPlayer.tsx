@@ -1,7 +1,7 @@
 import React from 'react';
 import { Howl, Howler } from 'howler';
 
-import { gsap } from "gsap";
+import { gsap, Linear } from "gsap";
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 
@@ -33,8 +33,8 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
         this.lineRef = React.createRef();
         this.playPauseRef = React.createRef();
 
-        this.lineSegments = ["0", "3.33%", "13.33%", "23.33%", "43.33%", "46.66%", "100%"];
-        this.lineSegmentTimes = ["0", "1", "4", "7", "13", "20", "30"];
+        this.lineSegments = ["0", "3.33%", "13.33%", "23.33%", "43.33%", "46.66%", "100%", "100%"];
+        this.lineSegmentTimes = ["0", "1", "4", "7", "13", "20", "30", "30"];
         this.animation = "";
         this.headerRefs = [];
 
@@ -46,7 +46,8 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
                 "3": [0, 7000],
                 "4": [0, 13000],
                 "5": [0, 20000],
-                "6": [0, 30000]
+                "6": [0, 30000],
+                "7": [0, 30000]
             },
             onend: () => {
                 this.playPauseRef.current.src = Play;
@@ -60,12 +61,25 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
     playSound() {
 
         this.forceUpdate();
+
+        if (this.howler.playing()) {
+            this.howler.stop();
+            this.animation.pause();
+
+            gsap.to(this.lineRef.current, {drawSVG: "0 live", duration: "0"});
+            this.lineRef.current.style.stroke = "green";
+
+            this.playPauseRef.current.src = Play;
+
+            return;
+        }
         
+        this.playPauseRef.current.src = Pause;
 
         gsap.to(this.lineRef.current, {drawSVG: "0 live", duration: "0"});
         this.lineRef.current.style.stroke = "green";
 
-        this.animation = gsap.fromTo(this.lineRef.current, {drawSVG: "0 live"}, {drawSVG: this.lineSegments[parseInt(this.props.currentStage)], duration: this.lineSegmentTimes[parseInt(this.props.currentStage)]});
+        this.animation = gsap.fromTo(this.lineRef.current, {drawSVG: "0 live"}, {drawSVG: this.lineSegments[parseInt(this.props.currentStage)], duration: this.lineSegmentTimes[parseInt(this.props.currentStage)], ease: Linear.easeNone});
 
         this.howler.play(this.props.currentStage);
 

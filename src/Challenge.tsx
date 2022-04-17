@@ -143,6 +143,7 @@ class Challenge extends React.Component<{}, ChallengeState> {
                 <div>
                     <div className="gameHeader">
                         <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} />
+                        <div style={{textAlign: "center"}} ><NavButton route="/" innerText="Go Home" /></div>
                     </div>
                     <div className="mobileSearch">
                         <MusicSearch onResult={this.getDeezerSearch} />
@@ -157,7 +158,8 @@ class Challenge extends React.Component<{}, ChallengeState> {
             return (
                 <div>
                     <div className="gameHeader">
-                        <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} />    
+                        <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} /> 
+                        <div style={{textAlign: "center"}} ><NavButton route="/" innerText="Go Home" /></div>
                     </div>
                     <div id="centered">
                         <h1>Awesome. Share the link below with anyone you want.</h1> 

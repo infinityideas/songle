@@ -8,6 +8,7 @@ import MusicPlayer from './components/MusicPlayer';
 import Footer from './components/Footer';
 import Guessing from './components/Guessing';
 import config from './scripts/Config';
+import NavButton from './components/NavButton';
 const axios = require("axios");
 
 
@@ -22,6 +23,27 @@ function ChallengeGame () {
     const [artistName, setArtistName] = useState("");
 
     const getDeezerResult = async (id: string, gameId: any) => {
+        if (id=="skip") {
+            if (prevGueses[0].value=="songle") {
+                setPrevGuesses([{value: "Skipped", correct: false, correctString: "❌"}]);
+            } else {
+                setPrevGuesses([...prevGueses, {value: "Skipped", correct: false, correctString: "❌"}]);
+            }
+            setCurrentStage((parseInt(currentStage)+1).toString());
+            axios.get(config.flaskServer+"/ne", {params: {
+                "type": "fail-skipped-",
+                "channel": gameId.split('-')[1]
+            }});
+
+            if (prevGueses.length == 5) {
+                axios.get(config.flaskServer+"/ne", {params: {
+                    "type": "endfail",
+                    "channel": gameId.split('-')[1]
+                }})
+            }
+
+            return;
+        }
         await axios.get(config.corsAnywhere+'https://api.deezer.com/track/'+id, { headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response: any) => {
             if ((response.data.title_short == songName) && (response.data.artist.name == artistName)) {
                 if (prevGueses[0].value=="songle") {
@@ -108,6 +130,7 @@ function ChallengeGame () {
         <div>
             <div id="gameHeader">
                 <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} />
+                <div style={{width: "100%", textAlign: "center", marginBottom: "15px"}}><NavButton route="/" innerText="Main Page" /></div>
             </div>
             {toReturn}
             <Footer />

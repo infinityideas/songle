@@ -4,9 +4,7 @@ import MusicResults from './MusicResults';
 
 import '../styles/Game.css';
 import '../styles/Guessing.css';
-import config from '../scripts/Config';
-
-const axios = require('axios');
+import '../styles/NavButton.css';
 
 interface GuessingProps {
     currentStage: string,
@@ -74,11 +72,11 @@ class Guessing extends React.Component<GuessingProps, GuessingState> {
 
         if (this.props.prevGuesses[0].value != "songle") {
             for (var i=0; i<this.props.prevGuesses.length; i++) {
-                prevGuesses.push(React.createElement("div", {className: "guess"}, [<h3><strong>Guess {i+1}/6:</strong> {this.props.prevGuesses[i].value} {this.props.prevGuesses[i].correctString}</h3>]));
+                prevGuesses.push(React.createElement("div", {className: "guess", key:"guessOpt-"+i}, [<h3><strong>Guess {i+1}/6:</strong> {this.props.prevGuesses[i].value} {this.props.prevGuesses[i].correctString}</h3>]));
             }
         }
 
-        this.toReturnB = React.createElement("div", {}, prevGuesses);
+        this.toReturnB = React.createElement("div", {key: "holder"}, prevGuesses);
 
         if (this.props.prevGuesses[this.props.prevGuesses.length-1].correct) {
             this.toReturnC = (<div style={{color: "white", textAlign: "center"}}><h1>You guessed correctly!! Congrats :)</h1></div>);
@@ -89,6 +87,8 @@ class Guessing extends React.Component<GuessingProps, GuessingState> {
                 this.toReturnC = (
                     <div>
                         <div className="mobileSearch">
+                            <br />
+                            <div style={{width: "100%", textAlign: "center"}}><button className="NavButton" onClick={() => {this.props.onChoose("skip")}}><p className="innerText" >Skip</p></button></div>
                             <MusicSearch onResult={this.getDeezerSearch} />
                             <div style={{display: this.state.searched}}>
                                 <MusicResults response={this.state.results} onChoose={this.onChoose} />
