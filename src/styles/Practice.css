@@ -1,0 +1,13 @@
+.PracticeSelect {
+    border-radius: 10px;
+    border: 2px solid white;
+    width: 300px;
+    background-color: black;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.PracticeSelect:hover {
+    background-color: blue;
+}

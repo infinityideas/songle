@@ -119,7 +119,7 @@ class Challenge extends React.Component<{}, ChallengeState> {
         } else {
             eventText = EventDict[ename];
         }
-        eventlist.push(React.createElement("p", {}, [React.createElement("strong", {}, [this.state.events[i].localtime+": "]), eventText+" by "+this.state.events[i].name]))
+        eventlist.push(React.createElement("p", {}, [React.createElement("strong", {}, [this.state.events[i].localtime+": "]), eventText]))
      }
 
      this.eventDiv = React.createElement("div", {className: "eventHolder"}, eventlist);

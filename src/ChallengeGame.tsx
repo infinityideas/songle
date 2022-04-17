@@ -31,7 +31,7 @@ function ChallengeGame () {
             }
             setCurrentStage((parseInt(currentStage)+1).toString());
             axios.get(config.flaskServer+"/ne", {params: {
-                "type": "fail-skipped-",
+                "type": "skipped",
                 "channel": gameId.split('-')[1]
             }});
 
