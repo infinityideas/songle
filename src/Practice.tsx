@@ -16,6 +16,7 @@ interface PracticeState {
 class Practice extends React.Component<{}, PracticeState> {
     private toReturn: any;
     private selectEl: JSX.Element;
+    private selectRef: any;
 
     constructor(props: any) {
         super(props);
@@ -25,9 +26,15 @@ class Practice extends React.Component<{}, PracticeState> {
         }
         
         this.generateOptions = this.generateOptions.bind(this);
+        this.selectgenre  = this.selectgenre.bind(this);
 
         this.toReturn = <div></div>;
+        this.selectRef = React.createRef();
         this.selectEl = <select className="PracticeSelect"></select>
+    }
+
+    selectgenre(e: any) {
+        console.log(playlistnames[this.selectRef.current.selectedIndex-1]);
     }
 
     generateOptions() {
@@ -39,7 +46,7 @@ class Practice extends React.Component<{}, PracticeState> {
             selectOptions.push(React.createElement("option", {key:"option"+(i+1)}, [playlistnames[i]]));
         }
 
-        this.selectEl = React.createElement("select", {className: "PracticeSelect"}, selectOptions);
+        this.selectEl = React.createElement("select", {className: "PracticeSelect", onChange: this.selectgenre, ref: this.selectRef}, selectOptions);
     }
 
     render() {
@@ -47,15 +54,15 @@ class Practice extends React.Component<{}, PracticeState> {
             this.generateOptions();
 
             this.toReturn = (
-                <div style={{width: "100%", margin: "auto", height: "100px", marginTop: "10px", color: "white"}}>
-                    <div style={{width: "45%", display: "inline-block", height: "100%"}}>
+                <div id="choiceHolder">
+                    <div className="holder1">
                         {this.selectEl}
                     </div>
-                    <div style={{width: "10%", display: "inline-block", height: "100%"}}>
+                    <div className="holder2">
                         <h1>Or</h1>
                     </div>
-                    <div style={{width: "45%", display: "inline-block", height: "100%"}}>
-                        <button className="NavButton"><p className="innerText">Random</p></button>
+                    <div className="holder3">
+                        <button className="NavButton" style={{width: "150px"}}><p className="innerText">Random genre</p></button>
                     </div>
                 </div>
             )

@@ -11,3 +11,62 @@
 .PracticeSelect:hover {
     background-color: blue;
 }
+
+#choiceHolder {
+    width: 100%;
+    margin: auto;
+    height: 100px;
+    margin-top: 10px;
+    color: white;
+}
+
+.holder1 {
+    width: 45%;
+    display: inline-block;
+    height: 100%;
+}
+
+.holder2 {
+    width: 10%;
+    display: inline-block;
+    height: 100%;
+}
+
+.holder3 {
+    width: 45%;
+    display: inline-block;
+    height: 100%;
+}
+
+@media (max-width: 900px) {
+    #choiceHolder {
+        width: 100%;
+        margin: auto;
+        height: 100px;
+        margin-top: 10px;
+        color: white;
+        text-align:center;
+        margin-bottom: 20px;
+    }
+
+    .holder1 {
+        width: 45%;
+        display: contents;
+        height: auto;
+        text-align:center;
+    }
+    
+    .holder2 {
+        width: 10%;
+        display: contents;
+        height: auto;
+        text-align:center;
+    }
+    
+    .holder3 {
+        width: 45%;
+        display: contents;
+        height: auto;
+        text-align:center;
+    }
+}
