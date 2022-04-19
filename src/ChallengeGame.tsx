@@ -9,103 +9,21 @@ import Footer from './components/Footer';
 import Guessing from './components/Guessing';
 import config from './scripts/Config';
 import NavButton from './components/NavButton';
+import GameContainer from './components/GameContainer';
 const axios = require("axios");
 
 
 function ChallengeGame () {
 
     const { gameId } = useParams();
-
-    const [previewLink, setPreviewLink] = useState("");
-    const [currentStage, setCurrentStage] = useState("1");
-    const [prevGueses, setPrevGuesses] = useState([{value: "songle", correct: false, correctString: "❌"}]);
-    const [songName, setSongName] = useState("");
-    const [artistName, setArtistName] = useState("");
-
-    const getDeezerResult = async (id: string, gameId: any) => {
-        if (id=="skip") {
-            if (prevGueses[0].value=="songle") {
-                setPrevGuesses([{value: "Skipped", correct: false, correctString: "❌"}]);
-            } else {
-                setPrevGuesses([...prevGueses, {value: "Skipped", correct: false, correctString: "❌"}]);
-            }
-            setCurrentStage((parseInt(currentStage)+1).toString());
-            axios.get(config.flaskServer+"/ne", {params: {
-                "type": "skipped",
-                "channel": gameId.split('-')[1]
-            }});
-
-            if (prevGueses.length == 5) {
-                axios.get(config.flaskServer+"/ne", {params: {
-                    "type": "endfail",
-                    "channel": gameId.split('-')[1]
-                }})
-            }
-
-            return;
-        }
-        await axios.get(config.corsAnywhere+'https://api.deezer.com/track/'+id, { headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response: any) => {
-            if ((response.data.title_short == songName) && (response.data.artist.name == artistName)) {
-                if (prevGueses[0].value=="songle") {
-                    setPrevGuesses([{value: response.data.title_short, correct: true, correctString: "✅"}]);
-                } else {
-                    setPrevGuesses([...prevGueses, {value: response.data.title_short, correct: true, correctString: "✅"}]);
-                }
-                setCurrentStage("6");
-                axios.get(config.flaskServer+"/ne", {params: {
-                    "type": "success",
-                    "channel": gameId.split('-')[1]
-                }});
-            } else {
-                if (prevGueses[0].value=="songle") {
-                    setPrevGuesses([{value: response.data.title_short, correct: false, correctString: "❌"}]);
-                } else {
-                    setPrevGuesses([...prevGueses, {value: response.data.title_short, correct: false, correctString: "❌"}]);
-                }
-                setCurrentStage((parseInt(currentStage)+1).toString());
-                axios.get(config.flaskServer+"/ne", {params: {
-                    "type": "fail-"+response.data.title_short+"-"+response.data.artist.name,
-                    "channel": gameId.split('-')[1]
-                }});
-
-                if (prevGueses.length == 5) {
-                    axios.get(config.flaskServer+"/ne", {params: {
-                        "type": "endfail",
-                        "channel": gameId.split('-')[1]
-                    }})
-                }
-            }
-        })
-    };
-
-    const onChoose = (id: string, gameIda = gameId) => {
-        getDeezerResult(id, gameIda);
-        setArtistName(artistName);
-    };
  
     useEffect(() => {
-        const getTrackInfo = async (gameId: string) => {
-        
-            await axios.get(config.corsAnywhere+"https://api.deezer.com/track/"+gameId, {headers: 
-                {"X-Requested-With": "XMLHttpRequest"}
-            }).then((response: any) => {
-                if (response.status==800) {
-                    window.location.replace(config.songleAddress+"/404");
-                } else {
-                    setPreviewLink(response.data.preview);
-                    setSongName(response.data.title_short);
-                    setArtistName(response.data.artist.name);
-                }
-            });
-        
-        }
 
         if (!window.location.href.includes("-")) {
             window.location.replace(config.songleAddress+"/404");
         }
     
         if (gameId!=undefined) {
-             getTrackInfo(gameId.split('-')[0]);
              axios.get(config.flaskServer+"/ne", {params: {
                  "type": "opened",
                  "channel": gameId.split('-')[1]
@@ -115,12 +33,6 @@ function ChallengeGame () {
         }
 
     }, []);
-
-    var toReturn = <div></div>;
-
-    if (previewLink!="") {
-        toReturn = (<div><MusicPlayer currentStage={currentStage} previewLink={previewLink} /><Guessing songArtist={artistName} songName={songName} currentStage={currentStage} prevGuesses={prevGueses} onChoose={onChoose} gameId={gameId} /></div>)
-    }
     
     const subText = (
         <p style={{fontFamily: 'Helvetica', marginTop: 0}}>Someone challenged you to a Songle! They've chosen a song... see if you can guess it in the fewest number of tries!</p>
@@ -132,7 +44,7 @@ function ChallengeGame () {
                 <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} />
                 <div style={{width: "100%", textAlign: "center", marginBottom: "15px"}}><NavButton route="/" innerText="Main Page" /></div>
             </div>
-            {toReturn}
+            <GameContainer usePusher={true} pusherId={gameId} />
             <Footer />
             <Outlet />
         </div>

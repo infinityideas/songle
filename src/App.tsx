@@ -23,7 +23,7 @@ function App() {
         <div id="key">
           <p><strong>📅 Daily:</strong> A new song daily; changes midnight EST.<br />
           <strong>✍️ Practice:</strong> Practice your song-recognition powers. Choose the genre if you'd like.<br />
-          <strong>🔥 Challenge:</strong> Choose a song and challenge your friends to recognize the song.<br />
+          <strong>🔥 Multiplayer:</strong> Choose a song and challenge your friends to recognize the song.<br />
           <strong>⁉️ About:</strong> Learn more about Songle.</p>  
         </div>
       </div>
