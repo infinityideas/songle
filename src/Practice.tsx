@@ -10,7 +10,9 @@ import './styles/Practice.css';
 const axios = require('axios');
 
 interface PracticeState {
-    chosenGenre: boolean
+    chosenGenre: boolean,
+    chosenGenreName: string,
+    chosenGenreId: number,
 }
 
 class Practice extends React.Component<{}, PracticeState> {
@@ -22,7 +24,9 @@ class Practice extends React.Component<{}, PracticeState> {
         super(props);
 
         this.state = {
-            chosenGenre: false
+            chosenGenre: false,
+            chosenGenreName: "",
+            chosenGenreId: 0,
         }
         
         this.generateOptions = this.generateOptions.bind(this);

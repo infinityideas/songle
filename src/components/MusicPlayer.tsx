@@ -26,6 +26,7 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
     private playPauseRef: any;
     private animation: any;
     private headerRefs: Array<any>;
+    private headerStyles: Array<string>;
 
     constructor(props: MusicPlayerProps) {
         super(props);
@@ -37,9 +38,11 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
         this.lineSegmentTimes = ["0", "1", "4", "7", "13", "20", "30", "30"];
         this.animation = "";
         this.headerRefs = [];
+        this.headerStyles = [];
 
         this.howler = new Howl({
             src: [this.props.previewLink],
+            html5: false,
             sprite: {
                 "1": [0, 1000],
                 "2": [0, 4000],
@@ -87,12 +90,15 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
 
     render() {
         this.headerRefs = [];
+        this.headerStyles = [];
 
         for (var i=0; i<6; i++) {
             if (i<parseInt(this.props.currentStage)) {
                 this.headerRefs.push("🔊");
+                this.headerStyles.push("rgb(71 188 193)")
             } else {
                 this.headerRefs.push("🔇");
+                this.headerStyles.push("rgb(0 0 0)");
             }
         }
 
@@ -115,12 +121,12 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
                         </colgroup>
                         <thead>
                             <tr style={{height: "20px"}}>
-                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[0]}}></th>
-                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[1]}}></th>
-                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[2]}}></th>
-                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[3]}}></th>
-                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[4]}}></th>
-                                <th dangerouslySetInnerHTML={{__html: this.headerRefs[5]}}></th>
+                                <th dangerouslySetInnerHTML={{__html: "<div class='headerRef'>"+this.headerRefs[0]+"</div>"}} style={{backgroundColor: this.headerStyles[0]}}></th>
+                                <th dangerouslySetInnerHTML={{__html: "<div class='headerRef'>"+this.headerRefs[1]+"</div>"}} style={{backgroundColor: this.headerStyles[1]}}></th>
+                                <th dangerouslySetInnerHTML={{__html: "<div class='headerRef'>"+this.headerRefs[2]+"</div>"}} style={{backgroundColor: this.headerStyles[2]}}></th>
+                                <th dangerouslySetInnerHTML={{__html: "<div class='headerRef'>"+this.headerRefs[3]+"</div>"}} style={{backgroundColor: this.headerStyles[3]}}></th>
+                                <th dangerouslySetInnerHTML={{__html: "<div class='headerRef'>"+this.headerRefs[4]+"</div>"}} style={{backgroundColor: this.headerStyles[4]}}></th>
+                                <th dangerouslySetInnerHTML={{__html: "<div class='headerRef'>"+this.headerRefs[5]+"</div>"}} style={{backgroundColor: this.headerStyles[5]}}></th>
                             </tr>
                         </thead>
                     </table>

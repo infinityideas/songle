@@ -41,22 +41,26 @@ th {
   cursor: pointer;
 }
 
-@media (max-width: 900px) {
+.headerRef {
+  display: auto;
+}
+
+@media (max-width: 975px) {
   .MusicPlayer {
-    width: 70vw;
+    width: 90vw;
     height: 60px;
     background-color: black;
     margin: auto;
   }
 
   .progressBar {
-    width: 70vw;
+    width: 90vw;
     height: 19px;
     display: block;
   }
 
   .svgHolder {
-    width: 70vw;
+    width: 90vw;
     margin: auto;
     border-left: 1px solid white;
     border-right: 1px solid white;
@@ -67,5 +71,9 @@ th {
     border: 0;
     background: transparent;
     cursor: pointer;
+  }
+
+  .headerRef {
+    display: none;
   }
 }

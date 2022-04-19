@@ -142,7 +142,7 @@ class Challenge extends React.Component<{}, ChallengeState> {
             return (
                 <div>
                     <div className="gameHeader">
-                        <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} />
+                        <HeaderText text="Multiplayer" doAnimation={false} subText={subText} isGame={true} />
                         <div style={{textAlign: "center"}} ><NavButton route="/" innerText="Go Home" /></div>
                     </div>
                     <div className="mobileSearch">
@@ -158,12 +158,12 @@ class Challenge extends React.Component<{}, ChallengeState> {
             return (
                 <div>
                     <div className="gameHeader">
-                        <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} /> 
+                        <HeaderText text="Multiplayer" doAnimation={false} subText={subText} isGame={true} /> 
                         <div style={{textAlign: "center"}} ><NavButton route="/" innerText="Go Home" /></div>
                     </div>
                     <div id="centered">
                         <h1>Awesome. Share the link below with anyone you want.</h1> 
-                        <h3 style={{overflowWrap: "anywhere"}}>{this.state.randomURL}</h3><hr />
+                        <h3 style={{overflowWrap: "break-word"}}>{this.state.randomURL}</h3><hr />
                         <h2>Want real-time updates on your link? Don't close this tab.</h2>
                         {this.eventDiv}
                         {this.goHome}   

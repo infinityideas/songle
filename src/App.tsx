@@ -7,7 +7,7 @@ import NavButton from './components/NavButton';
 
 function App() {
   const subText = (
-    <p id="underText">Inspired by <a href="https://heardle.app">Heardle</a>. Now with daily, practice, and challenge modes (including genre selection).</p>
+    <p id="underText">Inspired by <a href="https://heardle.app">Heardle</a>. Now with daily, practice, and multiplayer modes (including genre selection).</p>
   )
 
   return (
@@ -17,7 +17,7 @@ function App() {
         <div id="buttonHolder">
           <NavButton route="/daily" innerText="Daily" />
           <NavButton route="/practice" innerText="Practice" />
-          <NavButton route="/challenge" innerText="Challenge" />
+          <NavButton route="/challenge" innerText="Multiplayer" />
           <NavButton route="/about" innerText="About" />
         </div>
         <div id="key">
