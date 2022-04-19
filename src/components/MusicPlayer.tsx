@@ -2,14 +2,12 @@ import React from 'react';
 import { Howl, Howler } from 'howler';
 
 import { gsap, Linear } from "gsap";
-import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 
 import '../styles/MusicPlayer.css';
 import Play from '../assets/images/icons/circle-play-solid.svg';
 import Pause from '../assets/images/icons/circle-pause-solid.svg';
 
-gsap.registerPlugin(MorphSVGPlugin);
 gsap.registerPlugin(DrawSVGPlugin);
 gsap.config({ nullTargetWarn: false });
 
@@ -42,7 +40,7 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
 
         this.howler = new Howl({
             src: [this.props.previewLink],
-            html5: false,
+            html5: true,
             sprite: {
                 "1": [0, 1000],
                 "2": [0, 4000],

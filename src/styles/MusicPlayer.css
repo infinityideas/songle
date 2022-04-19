@@ -1,5 +1,5 @@
 .MusicPlayer {
-  width: 40vw;
+  width: 70vw;
   height: 60px;
   background-color: black;
   margin: auto;
@@ -18,17 +18,16 @@ th {
 .playPause {
   text-align: center;
   filter: invert(100%);
-  cursor: pointer;
 }
 
 .progressBar {
-  width: 40vw;
+  width: 70vw;
   height: 19px;
   display: block;
 }
 
 .svgHolder {
-  width: 40vw;
+  width: 70vw;
   margin: auto;
   border-left: 1px solid white;
   border-right: 1px solid white;
