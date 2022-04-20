@@ -47,7 +47,7 @@ function PracticeGenre() {
         const getRandomSong = async (genreId: any) => {
             await axios.get(config.corsAnywhere+"https://api.deezer.com/playlist/"+genreId).then((response: any) => {
                 var randomNumber = Math.floor(Math.random() * response.data.tracks.data.length);
-                setToReturn(<GameContainer usePusher={false} pusherId={response.data.tracks.data[randomNumber].id+"-"+"none"} shareText={"Songle PRACTICE: "+playlistnames[playlistdict.indexOf(genreId)]+"\nSong: "+response.data.tracks.data[randomNumber].title_short+" by "+response.data.tracks.data[randomNumber].artist.name}/>);
+                setToReturn(<GameContainer onDone={"none"} usePusher={false} pusherId={response.data.tracks.data[randomNumber].id+"-"+"none"} shareText={"Songle PRACTICE: "+playlistnames[playlistdict.indexOf(genreId)]+"\nSong: "+response.data.tracks.data[randomNumber].title_short+" by "+response.data.tracks.data[randomNumber].artist.name}/>);
             });
         }
 

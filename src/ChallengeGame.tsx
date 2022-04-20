@@ -44,7 +44,7 @@ function ChallengeGame () {
                 <HeaderText text="Challenge" doAnimation={false} subText={subText} isGame={true} />
                 <div style={{width: "100%", textAlign: "center", marginBottom: "15px"}}><NavButton route="/" innerText="Main Page" /></div>
             </div>
-            <GameContainer usePusher={true} pusherId={gameId} shareText={"Songle CHALLENGE\nSomeone challenged me to a Songle!"}/>
+            <GameContainer onDone={"none"} usePusher={true} pusherId={gameId} shareText={"Songle CHALLENGE\nSomeone challenged me to a Songle!"}/>
             <Footer />
             <Outlet />
         </div>

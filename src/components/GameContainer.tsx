@@ -18,6 +18,7 @@ interface GameContainerProps {
     usePusher: boolean,
     pusherId: any,
     shareText: any,
+    onDone: any,
 }
 
 class GameContainer extends React.Component<GameContainerProps, GameContainerState>{
@@ -42,21 +43,21 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
     async getDeezerResult (id: string, gameId: any) {
         if (id=="skip") {
             if (this.state.prevGueses[0].value=="songle") {
-                this.setState((prev) => {
+                await this.setState((prev) => {
                     return ({
                         ...prev,
                         prevGueses: [{value: "Skipped", correct: false, correctString: "❌"}]
                     });
                 });
             } else {
-                this.setState((prev) => {
+                await this.setState((prev) => {
                     return ({
                         ...prev,
                         prevGueses: [...prev.prevGueses, {value: "Skipped", correct: false, correctString: "❌"}]
                     });
                 });
             }
-            this.setState((prev) => {
+            await this.setState((prev) => {
                 return ({
                     ...prev,
                     currentStage: (parseInt(prev.currentStage)+1).toString()
@@ -69,82 +70,103 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
                 }});
             }
 
-            if (this.state.prevGueses.length == 5 && this.props.usePusher) {
+            if (this.state.prevGueses.length == 6 && this.props.usePusher) {
                 axios.get(config.flaskServer+"/ne", {params: {
                     "type": "endfail",
                     "channel": gameId.split('-')[1]
                 }})
             }
 
-            return;
-        }
-        await axios.get(config.corsAnywhere+'https://api.deezer.com/track/'+id, { headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response: any) => {
-            if ((response.data.title_short == this.state.songName) && (response.data.artist.name == this.state.artistName)) {
-                if (this.state.prevGueses[0].value=="songle") {
-                    this.setState((prev) => {
-                        return ({
-                            ...prev,
-                            prevGueses: [{value: response.data.title_short, correct: true, correctString: "✅"}]
-                        });
-                    });
-                } else {
-                    this.setState((prev) => {
-                        return ({
-                            ...prev,
-                            prevGueses: [...prev.prevGueses, {value: response.data.title_short, correct: true, correctString: "✅"}]
-                        });
-                    });
-                }
-                this.setState((prev) => {
-                    return({
-                        ...prev,
-                        currentStage: "6"
-                    })
-                });
-                if (this.props.usePusher) {
-                    axios.get(config.flaskServer+"/ne", {params: {
-                        "type": "success",
-                        "channel": gameId.split('-')[1]
-                    }});
-                }
-            } else {
-                if (this.state.prevGueses[0].value=="songle") {
-                    this.setState((prev) => {
-                        return({
-                            ...prev,
-                            prevGueses: [{value: response.data.title_short, correct: false, correctString: "❌"}]
-                        })
-                    });
-                } else {
-                    this.setState((prev) => {
-                        return({
-                            ...prev,
-                            prevGueses: [...prev.prevGueses, {value: response.data.title_short, correct: false, correctString: "❌"}]
-                        })
-                    });
-                }
-                this.setState((prev) => {
-                    return({
-                        ...prev,
-                        currentStage: (parseInt(prev.currentStage)).toString()
-                    })
-                });
-
-                if (this.props.usePusher) {
-                    axios.get(config.flaskServer+"/ne", {params: {
-                        "type": "fail-"+response.data.title_short+"-"+response.data.artist.name,
-                        "channel": gameId.split('-')[1]
-                    }});
-                }
-                
-                if (this.state.prevGueses.length == 5 && this.props.usePusher) {
-                    axios.get(config.flaskServer+"/ne", {params: {
-                        "type": "endfail",
-                        "channel": gameId.split('-')[1]
-                    }})
-                }
+            console.log(this.state.prevGueses);
+            if (this.state.prevGueses.length == 6 && this.props.onDone != "none") {
+                console.log("hasdjhfasjdkf");
+                this.props.onDone("xxxxxx");
             }
-        })
+
+            return;
+        } else {
+            await axios.get(config.corsAnywhere+'https://api.deezer.com/track/'+id, { headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response: any) => {
+                if ((response.data.title_short == this.state.songName) && (response.data.artist.name == this.state.artistName)) {
+                    if (this.state.prevGueses[0].value=="songle") {
+                        this.setState((prev) => {
+                            return ({
+                                ...prev,
+                                prevGueses: [{value: response.data.title_short, correct: true, correctString: "✅"}]
+                            });
+                        });
+                    } else {
+                        this.setState((prev) => {
+                            return ({
+                                ...prev,
+                                prevGueses: [...prev.prevGueses, {value: response.data.title_short, correct: true, correctString: "✅"}]
+                            });
+                        });
+                    }
+                    this.setState((prev) => {
+                        return({
+                            ...prev,
+                            currentStage: "6"
+                        })
+                    });
+                    if (this.props.usePusher) {
+                        axios.get(config.flaskServer+"/ne", {params: {
+                            "type": "success",
+                            "channel": gameId.split('-')[1]
+                        }});
+                    }
+                    if (this.props.onDone != "none") {
+                        var doneString = "";
+
+                        for (var x=0; x<this.state.prevGueses.length-1; x++) {
+                            doneString+="x";
+                        }
+
+                        this.props.onDone(doneString+"y")
+                    }
+                } else {
+                    if (this.state.prevGueses[0].value=="songle") {
+                        this.setState((prev) => {
+                            return({
+                                ...prev,
+                                prevGueses: [{value: response.data.title_short, correct: false, correctString: "❌"}]
+                            })
+                        });
+                    } else {
+                        this.setState((prev) => {
+                            return({
+                                ...prev,
+                                prevGueses: [...prev.prevGueses, {value: response.data.title_short, correct: false, correctString: "❌"}]
+                            })
+                        });
+                    }
+                    this.setState((prev) => {
+                        return({
+                            ...prev,
+                            currentStage: (parseInt(prev.currentStage)).toString()
+                        })
+                    });
+
+                    if (this.props.usePusher) {
+                        axios.get(config.flaskServer+"/ne", {params: {
+                            "type": "fail-"+response.data.title_short+"-"+response.data.artist.name,
+                            "channel": gameId.split('-')[1]
+                        }});
+                    }
+                    
+                    if (this.state.prevGueses.length == 6 && this.props.usePusher) {
+                        axios.get(config.flaskServer+"/ne", {params: {
+                            "type": "endfail",
+                            "channel": gameId.split('-')[1]
+                        }})
+                    }
+
+                    if (this.state.prevGueses.length == 6 && this.props.onDone!="none") {
+                        this.props.onDone("xxxxxx");
+                    }
+
+                }
+            })
+        }
     };
 
     async getTrackInfo (trackNum: string) {
@@ -196,5 +218,7 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
         )
     }
 }
+
+
 
 export default GameContainer;

@@ -1,6 +1,6 @@
 from flask import Flask, request, make_response
 import configparser
-import sys
+import psycopg2
 import pusher
 import requests
 import json
@@ -42,5 +42,20 @@ def ne():
 
     pusher_client.trigger(channel, 'ne', {u'message': typeE})
     resp = make_response({"resp": "valid"})
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return resp
+
+@app.route('/todayid', methods=['GET'])
+def todayid():
+    conn = psycopg2.connect(
+        host = config['POSTGRES']['host'],
+        database = config['POSTGRES']['database'],
+        user = config['POSTGRES']['user'],
+        password = config['POSTGRES']['password']
+    )
+    cursor = conn.cursor()
+    cursor.execute("SELECT songletable.songid, songletable.id FROM songletable WHERE date='"+request.args.get('date')+"'")
+    response = cursor.fetchone()
+    resp = make_response({"resp": (response[0]), "id": response[1]})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
