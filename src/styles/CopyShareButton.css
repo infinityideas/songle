@@ -1,0 +1,12 @@
+.ShareButton {
+    text-align: center;
+    background-color: #12ba12;
+    color: white;
+    border-radius: 4px;
+    min-width: 75px;
+    height: 45px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+}

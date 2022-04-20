@@ -5,6 +5,8 @@ import MusicResults from './MusicResults';
 import '../styles/Game.css';
 import '../styles/Guessing.css';
 import '../styles/NavButton.css';
+import CopyShareButton from './CopyShareButton';
+import  config  from '../scripts/Config';
 
 interface GuessingProps {
     currentStage: string,
@@ -12,7 +14,8 @@ interface GuessingProps {
     songName: string,
     songArtist: string,
     onChoose: any,
-    gameId: any
+    gameId: any,
+    shareText: any,
 }
 
 interface GuessingState {
@@ -26,6 +29,7 @@ class Guessing extends React.Component<GuessingProps, GuessingState> {
     private toReturnA: any;
     private toReturnB: any;
     private toReturnC: any;
+    private toShare: any;
 
     constructor(props: GuessingProps) {
         super(props);
@@ -33,6 +37,7 @@ class Guessing extends React.Component<GuessingProps, GuessingState> {
         this.toReturnA = (<div></div>);
         this.toReturnB = (<div></div>);
         this.toReturnC = (<div></div>);
+        this.toShare = "";
 
         this.state = ({
             searched: "none",
@@ -60,6 +65,18 @@ class Guessing extends React.Component<GuessingProps, GuessingState> {
         this.props.onChoose(id.toString());
     }
 
+    generateShare() {
+        this.toShare = this.props.shareText+"\n\n🔈 ";
+        if (this.props.prevGuesses.length == 6 && !this.props.prevGuesses[5].correct) {
+            this.toShare += "⬛️⬛️⬛️⬛️⬛️⬛️\n\nI couldn't guess this Songle!\n\n"+config.songleAddress;
+            return;
+        }
+        for (var i=0; i<this.props.prevGuesses.length-1; i++) {
+            this.toShare += "⬛️";
+        }
+        this.toShare += "✅\n\n"+config.songleAddress;
+    }
+
     generateDisplay() {
 
         this.toReturnA = (
@@ -79,10 +96,12 @@ class Guessing extends React.Component<GuessingProps, GuessingState> {
         this.toReturnB = React.createElement("div", {key: "holder"}, prevGuesses);
 
         if (this.props.prevGuesses[this.props.prevGuesses.length-1].correct) {
-            this.toReturnC = (<div style={{color: "white", textAlign: "center"}}><h1>You guessed correctly!! Congrats :)</h1></div>);
+            this.generateShare();
+            this.toReturnC = (<div style={{color: "white", textAlign: "center"}}><CopyShareButton copyText={this.toShare} innerText='Share'/><h1>You guessed correctly!! Congrats :)</h1></div>);
         } else {
             if (this.props.prevGuesses.length == 6) {
-                this.toReturnC = (<div style={{color: "white", textAlign: "center"}}><h1>You ran out of guesses! The song was {this.props.songName} by {this.props.songArtist}.</h1></div>)
+                this.generateShare();
+                this.toReturnC = (<div style={{color: "white", textAlign: "center"}}><CopyShareButton copyText={this.toShare} innerText='Share'/><h1>You ran out of guesses! The song was {this.props.songName} by {this.props.songArtist}.</h1></div>)
             } else {
                 this.toReturnC = (
                     <div>

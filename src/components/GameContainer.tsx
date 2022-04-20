@@ -17,6 +17,7 @@ interface GameContainerState {
 interface GameContainerProps {
     usePusher: boolean,
     pusherId: any,
+    shareText: any,
 }
 
 class GameContainer extends React.Component<GameContainerProps, GameContainerState>{
@@ -61,12 +62,14 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
                     currentStage: (parseInt(prev.currentStage)+1).toString()
                 })
             });
-            axios.get(config.flaskServer+"/ne", {params: {
-                "type": "skipped",
-                "channel": gameId.split('-')[1]
-            }});
+            if (this.props.usePusher) {
+                axios.get(config.flaskServer+"/ne", {params: {
+                    "type": "skipped",
+                    "channel": gameId.split('-')[1]
+                }});
+            }
 
-            if (this.state.prevGueses.length == 5) {
+            if (this.state.prevGueses.length == 5 && this.props.usePusher) {
                 axios.get(config.flaskServer+"/ne", {params: {
                     "type": "endfail",
                     "channel": gameId.split('-')[1]
@@ -98,10 +101,12 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
                         currentStage: "6"
                     })
                 });
-                axios.get(config.flaskServer+"/ne", {params: {
-                    "type": "success",
-                    "channel": gameId.split('-')[1]
-                }});
+                if (this.props.usePusher) {
+                    axios.get(config.flaskServer+"/ne", {params: {
+                        "type": "success",
+                        "channel": gameId.split('-')[1]
+                    }});
+                }
             } else {
                 if (this.state.prevGueses[0].value=="songle") {
                     this.setState((prev) => {
@@ -124,12 +129,15 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
                         currentStage: (parseInt(prev.currentStage)).toString()
                     })
                 });
-                axios.get(config.flaskServer+"/ne", {params: {
-                    "type": "fail-"+response.data.title_short+"-"+response.data.artist.name,
-                    "channel": gameId.split('-')[1]
-                }});
 
-                if (this.state.prevGueses.length == 5) {
+                if (this.props.usePusher) {
+                    axios.get(config.flaskServer+"/ne", {params: {
+                        "type": "fail-"+response.data.title_short+"-"+response.data.artist.name,
+                        "channel": gameId.split('-')[1]
+                    }});
+                }
+                
+                if (this.state.prevGueses.length == 5 && this.props.usePusher) {
                     axios.get(config.flaskServer+"/ne", {params: {
                         "type": "endfail",
                         "channel": gameId.split('-')[1]
@@ -152,7 +160,7 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
                         ...prev,
                         previewLink: response.data.preview,
                         songName: response.data.title_short,
-                        artistName: response.data.artist_name
+                        artistName: response.data.artist.name
                     })
                 });
             }
@@ -178,7 +186,7 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
         var toReturn = <div></div>;
 
         if (this.state.previewLink!="") {
-            toReturn = (<div><MusicPlayer currentStage={this.state.currentStage} previewLink={this.state.previewLink} /><Guessing songArtist={this.state.artistName} songName={this.state.songName} currentStage={this.state.currentStage} prevGuesses={this.state.prevGueses} onChoose={this.onChoose} gameId={this.props.pusherId} /></div>)
+            toReturn = (<div><MusicPlayer currentStage={this.state.currentStage} previewLink={this.state.previewLink} /><Guessing shareText={this.props.shareText} songArtist={this.state.artistName} songName={this.state.songName} currentStage={this.state.currentStage} prevGuesses={this.state.prevGueses} onChoose={this.onChoose} gameId={this.props.pusherId} /></div>)
         }
 
         return (

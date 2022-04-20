@@ -59,6 +59,10 @@ class MusicPlayer extends React.Component<MusicPlayerProps, {}> {
         this.playSound = this.playSound.bind(this);
     }
 
+    componentWillUnmount() {
+        this.howler.stop();
+    }
+
     playSound() {
 
         this.forceUpdate();

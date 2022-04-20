@@ -10,6 +10,7 @@ import './styles/Game.css';
 import EventDict from './scripts/EventDict';
 import config from './scripts/Config';
 import MusicSearch from './components/MusicSearch';
+import CopyShareButton from './components/CopyShareButton';
 
 const axios = require('axios');
 
@@ -163,7 +164,8 @@ class Challenge extends React.Component<{}, ChallengeState> {
                     </div>
                     <div id="centered">
                         <h1>Awesome. Share the link below with anyone you want.</h1> 
-                        <h3 style={{overflowWrap: "break-word"}}>{this.state.randomURL}</h3><hr />
+                        <h3 style={{overflowWrap: "break-word"}}>{this.state.randomURL}</h3>
+                        <CopyShareButton copyText={"I've challenged you to a Songle!\n\n"+this.state.randomURL} innerText="Share" /><hr />
                         <h2>Want real-time updates on your link? Don't close this tab.</h2>
                         {this.eventDiv}
                         {this.goHome}   
