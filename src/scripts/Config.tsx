@@ -1,8 +1,8 @@
 const config = {
     pusherKey: "77fde6451dc6f79cf99b",
-    corsAnywhere: "https://songlecors.ngrok.io/",
+    corsAnywhere: "",
     flaskServer: "https://songleflask.ngrok.io",
-    songleAddress: "https://songle.ngrok.io"
+    songleAddress: "https://songle.infinityideas.dev"
 }
 
 export default config;
