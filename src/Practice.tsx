@@ -3,6 +3,7 @@ import Footer from './components/Footer';
 import HeaderText from './components/HeaderText';
 import NavButton from './components/NavButton';
 import playlistdict, { playlistnames } from './scripts/PracticePlaylistDict';
+import config from './scripts/Config';
 
 import './styles/NavButton.css';
 import './styles/Practice.css';
@@ -31,6 +32,7 @@ class Practice extends React.Component<{}, PracticeState> {
         
         this.generateOptions = this.generateOptions.bind(this);
         this.selectgenre  = this.selectgenre.bind(this);
+        this.chooseRandom = this.chooseRandom.bind(this);
 
         this.toReturn = <div></div>;
         this.selectRef = React.createRef();
@@ -38,7 +40,7 @@ class Practice extends React.Component<{}, PracticeState> {
     }
 
     selectgenre(e: any) {
-        console.log(playlistnames[this.selectRef.current.selectedIndex-1]);
+        window.location.replace(config.songleAddress+"/practice/"+playlistdict[this.selectRef.current.selectedIndex-1]);
     }
 
     generateOptions() {
@@ -51,6 +53,10 @@ class Practice extends React.Component<{}, PracticeState> {
         }
 
         this.selectEl = React.createElement("select", {className: "PracticeSelect", onChange: this.selectgenre, ref: this.selectRef}, selectOptions);
+    }
+
+    chooseRandom() {
+        window.location.replace(config.songleAddress+"/practice/"+playlistdict[Math.floor(Math.random() * playlistdict.length)]);
     }
 
     render() {
@@ -66,7 +72,7 @@ class Practice extends React.Component<{}, PracticeState> {
                         <h1>Or</h1>
                     </div>
                     <div className="holder3">
-                        <button className="NavButton" style={{width: "150px"}}><p className="innerText">Random genre</p></button>
+                        <button className="NavButton" style={{width: "150px"}} onClick={this.chooseRandom}><p className="innerText">Random genre</p></button>
                     </div>
                 </div>
             )

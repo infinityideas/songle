@@ -11,6 +11,7 @@ import Practice from './Practice';
 import Daily from './Daily';
 import Challenge from './Challenge';
 import NotFound from './NotFound';
+import PracticeGenre from './PracticeGenre';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.render(
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
         <Route path="/practice" element={<Practice />} />
+        <Route path="/practice/:genreId" element={<PracticeGenre />} />
         <Route path="/daily" element={<Daily />} />
         <Route path="/challenge" element={<Challenge />} />
         <Route path="*" element={<NotFound />} />
