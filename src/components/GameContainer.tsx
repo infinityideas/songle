@@ -77,10 +77,17 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
                 }})
             }
 
-            console.log(this.state.prevGueses);
             if (this.state.prevGueses.length == 6 && this.props.onDone != "none") {
-                console.log("hasdjhfasjdkf");
                 this.props.onDone("xxxxxx");
+            }
+
+            if (this.state.prevGueses.length == 6) {
+                await this.setState((prev) => {
+                    return({
+                        ...prev,
+                        currentStage: "6"
+                    })
+                })
             }
 
             return;
@@ -162,6 +169,15 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
 
                     if (this.state.prevGueses.length == 6 && this.props.onDone!="none") {
                         this.props.onDone("xxxxxx");
+                    }
+
+                    if (this.state.prevGueses.length == 6) {
+                        this.setState((prev) => {
+                            return ({
+                                ...prev,
+                                currentStage: "6"
+                            })
+                        })
                     }
 
                 }

@@ -93,7 +93,6 @@ class Challenge extends React.Component<{}, ChallengeState> {
     }
 
     addEvent(data: any) {
-        console.log(data);
         var today = new Date();
         this.setState(prev => {
             return {
