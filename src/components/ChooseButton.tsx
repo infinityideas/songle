@@ -8,19 +8,24 @@ interface ChooseButtonProps {
 }
 
 class ChooseButton extends React.Component<ChooseButtonProps, {}> {
+    private buttonRef: any
+
     constructor(props: ChooseButtonProps) {
         super(props);
+
+        this.buttonRef = React.createRef();
 
         this.onClick = this.onClick.bind(this);
     }
 
     onClick(e: any) {
+        this.buttonRef.current.disabled = true;
         this.props.onChoose(this.props.id);
     }
 
     render() {
         return (
-            <button className="chooseButton" onClick={this.onClick}>
+            <button className="chooseButton" onClick={this.onClick} ref={this.buttonRef}>
                 Choose
             </button>
         )
