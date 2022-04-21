@@ -20,6 +20,9 @@ class ChooseButton extends React.Component<ChooseButtonProps, {}> {
 
     onClick(e: any) {
         this.buttonRef.current.disabled = true;
+        setTimeout(() => {
+            this.buttonRef.current.disabled = false;
+        }, 200);
         this.props.onChoose(this.props.id);
     }
 
