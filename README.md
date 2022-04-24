@@ -8,4 +8,10 @@ This project is licensed under GNU's Lesser General Public License. This means t
 **Note:** This program uses animations from the GSAP library (GreenSock, Inc). Some of these animations require a valid BusinessGreen license to use (SVG animations, etc). You are free to buy your own license and paste in your token into a .npmrc file. Certain animations, including the green progress bar in the music player, uses one of these animations and the program **will not work** unless you have the appropriate license.
 
 ## Frameworks
-Songle relies on React (Facebook, Inc.) for frontend, Flask (Pallets) for backend, Pusher (MessageBird, Inc.) for realtime services, Postgres (The PostgreSQL Global Development Group) for database software. Access to music and playlists is provided by Deezer. Hosting for SongleDB, SongleFlask, and SongleCors (a fork from cors-anywhere) are run on Heroku with Songle itself being hosted on Vercel under a custom domain.
+Songle relies on several different services, libraries, and frameworks to keep running. They are listed below. At no point does any personally identifying information get created.
+* **Frontend**: React (Facebook, Inc.)
+* **Backend**: Flask
+* **Database**: PostgreSQL
+* **CRON Job Scheduler**: Airplane (Airplane Labs, Inc.)
+* **Backend/Database/CORS Proxy Hosting**: Heroku (Salesforce, Inc.)
+* **Website Hosting**: Vercel, Inc.
