@@ -149,7 +149,7 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
                     this.setState((prev) => {
                         return({
                             ...prev,
-                            currentStage: (parseInt(prev.currentStage)).toString()
+                            currentStage: (parseInt(prev.currentStage)+1).toString()
                         })
                     });
 
