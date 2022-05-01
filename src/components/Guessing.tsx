@@ -79,11 +79,21 @@ class Guessing extends React.Component<GuessingProps, GuessingState> {
 
     generateDisplay() {
 
-        this.toReturnA = (
-        <div>
-            <h1 style={{marginBottom: 0}}>Your guesses</h1>
-            <h3 style={{marginTop: 0}}>If you guess incorrectly, you get a few more seconds of the song. You get six guesses!</h3>
-        </div>)
+        if (this.props.prevGuesses[this.props.prevGuesses.length-1].correct || this.props.prevGuesses.length == 6) {
+            this.toReturnA = (
+                <div>
+                    <h1 style={{marginBottom: 0}}>Your guesses</h1>
+                    <h3 style={{marginTop: 0}}>If you guess incorrectly, you get a few more seconds of the song. You get six guesses!</h3>
+                </div>)
+        } else {
+            this.toReturnA = (
+                <div>
+                    <h1 style={{marginBottom: 0}}>Your guesses</h1>
+                    <h3 style={{marginTop: 0}}>If you guess incorrectly, you get a few more seconds of the song. You get six guesses!</h3>
+                    <div style={{width: "100%", textAlign: "center"}}><button className="NavButton" onClick={() => {this.props.onChoose("skip")}}><p className="innerText" >Skip</p></button></div>
+                </div>)
+        }
+        
 
         var prevGuesses = [];
 
@@ -106,8 +116,6 @@ class Guessing extends React.Component<GuessingProps, GuessingState> {
                 this.toReturnC = (
                     <div>
                         <div className="mobileSearch">
-                            <br />
-                            <div style={{width: "100%", textAlign: "center"}}><button className="NavButton" onClick={() => {this.props.onChoose("skip")}}><p className="innerText" >Skip</p></button></div>
                             <MusicSearch onResult={this.getDeezerSearch} />
                             <div style={{display: this.state.searched}}>
                                 <MusicResults response={this.state.results} onChoose={this.onChoose} />
