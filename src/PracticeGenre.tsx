@@ -5,6 +5,7 @@ import HeaderText from "./components/HeaderText";
 import NavButton from "./components/NavButton";
 import GameContainer from "./components/GameContainer";
 import { useState, useEffect } from 'react';
+import Footer from "./components/Footer";
 
 const axios = require("axios");
 
@@ -65,6 +66,7 @@ function PracticeGenre() {
                 <h4 style={{color: "white", fontSize: "2em", marginTop: "5px"}}>Genre: {playlistnames[playlistdict.indexOf(newGenreId)]}</h4>
                 {toReturn}
             </div>
+            <Footer />
             <Outlet />
         </div>
     )
