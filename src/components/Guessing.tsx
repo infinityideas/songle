@@ -85,12 +85,19 @@ class Guessing extends React.Component<GuessingProps, GuessingState> {
                     <h1 style={{marginBottom: 0}}>Your guesses</h1>
                     <h3 style={{marginTop: 0}}>If you guess incorrectly, you get a few more seconds of the song. You get six guesses!</h3>
                 </div>)
-        } else {
+        } else if (this.props.prevGuesses.length >= 2) {
             this.toReturnA = (
                 <div>
                     <h1 style={{marginBottom: 0}}>Your guesses</h1>
                     <h3 style={{marginTop: 0}}>If you guess incorrectly, you get a few more seconds of the song. You get six guesses!</h3>
                     <div style={{width: "100%", textAlign: "center"}}><button className="NavButton" onClick={() => {this.props.onChoose("skip")}}><p className="innerText" >Skip</p></button><button className="NavButton" onClick={() => {this.props.onChoose("quit")}}><p className="innerText" >Give up</p></button></div>
+                </div>)
+        } else {
+            this.toReturnA = (
+                <div>
+                    <h1 style={{marginBottom: 0}}>Your guesses</h1>
+                    <h3 style={{marginTop: 0}}>If you guess incorrectly, you get a few more seconds of the song. You get six guesses!</h3>
+                    <div style={{width: "100%", textAlign: "center"}}><button className="NavButton" onClick={() => {this.props.onChoose("skip")}}><p className="innerText" >Skip</p></button></div>
                 </div>)
         }
         
@@ -108,7 +115,7 @@ class Guessing extends React.Component<GuessingProps, GuessingState> {
         if (this.props.prevGuesses[this.props.prevGuesses.length-1].correct) {
             this.generateShare();
             if (this.props.prevGuesses[this.props.prevGuesses.length-1].correctString == "🤷‍♂️") {
-                this.toReturnC = (<div style={{color: "white", textAlign: "center"}}><CopyShareButton copyText={this.toShare} innerText='Share'/><h1>You gave up!</h1></div>);
+                this.toReturnC = (<div style={{color: "white", textAlign: "center"}}><CopyShareButton copyText={this.toShare} innerText='Share'/><h1>You gave up! The song was {this.props.songName} by {this.props.songArtist}.</h1></div>);
             } else {
                 this.toReturnC = (<div style={{color: "white", textAlign: "center"}}><CopyShareButton copyText={this.toShare} innerText='Share'/><h1>You guessed correctly!! Congrats :)</h1></div>);
             }
