@@ -188,7 +188,7 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
     async getTrackInfo (trackNum: string) {
         
         await axios.get(config.corsAnywhere+"https://api.deezer.com/track/"+trackNum, {headers: 
-            {"X-Requested-With": "XMLHttpRequest"}
+            {"X-Requested-With": "XMLHttpRequest", }
         }).then((response: any) => {
             if (response.status==800) {
                 window.location.replace(config.songleAddress+"/404");
