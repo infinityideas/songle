@@ -24,8 +24,7 @@ class MusicSearch extends React.Component<MusicSearchProps, {}> {
             return;
         }
 
-        await axios.get(config.corsAnywhere+'https://api.deezer.com/search', {headers: 
-        {"X-Requested-With": "XMLHttpRequest"}}, { params: {
+        await axios.get(config.corsAnywhere+'https://api.deezer.com/search', { params: {
             q: this.searchRef.current.value,
             limit: 5,
             order: "RANKING",
