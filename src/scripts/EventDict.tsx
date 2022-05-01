@@ -6,6 +6,7 @@ const eventdict: any = {
     success: "🎉 Guessed correctly",
     endfail: "😔 Ran out of guesses",
     skipped: "⌛️ Skipped a guess",
+    endquit: "🚪 Quit"
 }
 
 export default eventdict;

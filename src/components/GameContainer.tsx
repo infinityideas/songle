@@ -91,6 +91,45 @@ class GameContainer extends React.Component<GameContainerProps, GameContainerSta
             }
 
             return;
+        } else if (id=="quit") {
+            if (this.state.prevGueses[0].value=="songle") {
+                this.setState((prev) => {
+                    return ({
+                        ...prev,
+                        prevGueses: [{value: "Quit", correct: true, correctString: "🤷‍♂️"}]
+                    });
+                });
+            } else {
+                this.setState((prev) => {
+                    return ({
+                        ...prev,
+                        prevGueses: [...prev.prevGueses, {value: "Quit", correct: true, correctString: "🤷‍♂️"}]
+                    });
+                });
+            }
+            this.setState((prev) => {
+                return({
+                    ...prev,
+                    currentStage: "6"
+                })
+            });
+            if (this.props.usePusher) {
+                axios.get(config.flaskServer+"/ne", {params: {
+                    "type": "endquit",
+                    "channel": gameId.split('-')[1]
+                }});
+            }
+            if (this.props.onDone != "none") {
+                var doneString = "";
+
+                for (var x=0; x<this.state.prevGueses.length-1; x++) {
+                    doneString+="x";
+                }
+
+                this.props.onDone(doneString+"x")
+            }
+
+            return;
         } else {
             await axios.get(config.corsAnywhere+'https://api.deezer.com/track/'+id, { headers: {"X-Requested-With": "XMLHttpRequest"}}).then((response: any) => {
                 if ((response.data.title_short == this.state.songName) && (response.data.artist.name == this.state.artistName)) {
