@@ -67,7 +67,7 @@ class Guessing extends React.Component<GuessingProps, GuessingState> {
 
     generateShare() {
         this.toShare = this.props.shareText+"\n\n🔈 ";
-        if (this.props.prevGuesses.length == 6 && !this.props.prevGuesses[5].correct) {
+        if ((this.props.prevGuesses.length == 6 && !this.props.prevGuesses[5].correct) || this.props.prevGuesses[this.props.prevGuesses.length-1].correctString=="🤷‍♂️") {
             this.toShare += "⬛️⬛️⬛️⬛️⬛️⬛️\n\nI couldn't guess this Songle!\n\n"+config.songleAddress;
             return;
         }

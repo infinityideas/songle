@@ -1,7 +1,6 @@
 import React from 'react';
 import config from '../scripts/Config';
 import MusicPlayer from './MusicPlayer';
-import Footer from './Footer';
 import Guessing from './Guessing';
 
 const axios = require('axios');
