@@ -2,6 +2,13 @@
 
 This project was made by Darius (infinityideas) and was inspired by [Heardle](https://heardle.app). 
 
+**Main Page:**
+[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/e7zr.svg)](https://betteruptime.com/?utm_source=status_badge)
+**Backend:**
+[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/e7zu.svg)](https://betteruptime.com/?utm_source=status_badge)
+**CORS Proxy:**
+[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/e7zt.svg)](https://betteruptime.com/?utm_source=status_badge)
+
 ## How to make a copy
 This project is licensed under GNU's Lesser General Public License. This means that you are free to copy, modify, and distribute the code (with some limitations; check out the license file for more).
 
